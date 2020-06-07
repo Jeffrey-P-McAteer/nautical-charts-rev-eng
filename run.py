@@ -41,7 +41,7 @@ if __name__ == '__main__':
   driver = webdriver.Firefox(options=fireFoxOptions)
   #driver.get(BEGIN_URL+"#"+zoom+"/"+begin_lat+"/"+begin_lon)
   begin_url = build_url_to(zoom, lat_begin, lon_begin)
-  print(f"begin_url={begin_url}")
+  print("begin_url={}".format(begin_url))
   driver.get(begin_url)
   
   # Poll for app to have loaded...
