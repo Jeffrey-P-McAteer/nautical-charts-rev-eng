@@ -56,18 +56,35 @@ if __name__ == '__main__':
   while True:
     curr_lat, curr_lon = parse_lat_lon_from_url(driver.current_url)
     print("Currently at {}".format( (curr_lat, curr_lon) ))
-    if curr_lon < lon_end:
-      # pan in the direction of lon_dir
-      #driver.execute_script("map.mousedown.")
-      body_elm = driver.find_element_by_id("map")
-      actions = ActionChains(driver)
-      actions.drag_and_drop_by_offset(body_elm, 100.0, 0.0).perform()
+    if lon_dir > 0: # aka == 1
+      if curr_lon < lon_end:
+        # pan in the direction of lon_dir
+        #driver.execute_script("map.mousedown.")
+        body_elm = driver.find_element_by_id("map")
+        actions = ActionChains(driver)
+        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).perform()
 
-    else:
-      # pan down and switch direction
-      lon_dir = -lon_dir
+      else:
+        # pan down and switch direction
+        lon_dir = -lon_dir
+        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).perform()
 
-    time.sleep(0.25)
+    else: # lon_dir == -1
+      if curr_lon > lon_begin:
+        # pan in the direction of lon_dir
+        #driver.execute_script("map.mousedown.")
+        body_elm = driver.find_element_by_id("map")
+        actions = ActionChains(driver)
+        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).perform()
+
+      else:
+        # pan down and switch direction
+        lon_dir = -lon_dir
+        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).perform()
+
+      # Pan in the opposite direction once so 
+
+    time.sleep(0.5)
 
 
   # image = Image.open(io.BytesIO(png_data))
