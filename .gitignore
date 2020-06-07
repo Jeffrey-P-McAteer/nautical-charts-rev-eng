@@ -1,0 +1,5 @@
+*.log
+*.out.png
+*.out.jpg
+__pycache__
+
