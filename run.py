@@ -70,28 +70,28 @@ if __name__ == '__main__':
         # pan in the direction of lon_dir
         #driver.execute_script("map.mousedown.")
         body_elm = driver.find_element_by_id("map")
-        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).pause(1.0).release().perform()
+        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).pause(0.5).release().perform()
 
       else:
         # pan down and switch direction
         lon_dir = -lon_dir
-        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).pause(1.0).release().perform()
+        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).pause(0.5).release().perform()
 
     else: # lon_dir == -1
       if curr_lon > lon_begin:
         # pan in the direction of lon_dir
         #driver.execute_script("map.mousedown.")
         body_elm = driver.find_element_by_id("map")
-        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).pause(1.0).release().perform()
+        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).pause(0.5).release().perform()
 
       else:
         # pan down and switch direction
         lon_dir = -lon_dir
-        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).pause(1.0).release().perform()
+        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).pause(0.5).release().perform()
 
 
     # actions.release().perform()
-    # actions.reset_actions().perform()
+    actions.reset_actions()#.perform()
 
     time.sleep(0.25)
 
