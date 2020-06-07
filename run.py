@@ -50,41 +50,50 @@ if __name__ == '__main__':
   # Neverming, "Polling"
   time.sleep(5.0)
 
+  # png_data contains a .png image as a bytearray
+  # which may be written to a file or stitched in-memory using PIL
   png_data = driver.get_screenshot_as_png()
+
+  actions = ActionChains(driver)
   lon_dir = 1
   # Pan right until web URL longitude > lon_end
   while True:
     curr_lat, curr_lon = parse_lat_lon_from_url(driver.current_url)
+    
+    # Check used while debugging zoom issue
+    if not ( str(zoom) in driver.current_url or "#"+str(int(zoom)) in driver.current_url ):
+      raise Exception("{} does not contain original zoom {}".format(driver.current_url, zoom))
+
     print("Currently at {}".format( (curr_lat, curr_lon) ))
     if lon_dir > 0: # aka == 1
       if curr_lon < lon_end:
         # pan in the direction of lon_dir
         #driver.execute_script("map.mousedown.")
         body_elm = driver.find_element_by_id("map")
-        actions = ActionChains(driver)
-        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).perform()
+        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).pause(1.0).release().perform()
 
       else:
         # pan down and switch direction
         lon_dir = -lon_dir
-        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).perform()
+        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).pause(1.0).release().perform()
 
     else: # lon_dir == -1
       if curr_lon > lon_begin:
         # pan in the direction of lon_dir
         #driver.execute_script("map.mousedown.")
         body_elm = driver.find_element_by_id("map")
-        actions = ActionChains(driver)
-        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).perform()
+        actions.drag_and_drop_by_offset(body_elm, -200.0 * lon_dir, 0.0).pause(1.0).release().perform()
 
       else:
         # pan down and switch direction
         lon_dir = -lon_dir
-        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).perform()
+        actions.drag_and_drop_by_offset(body_elm, 0.0, 200.0).pause(1.0).release().perform()
 
-      # Pan in the opposite direction once so 
 
-    time.sleep(0.5)
+    # actions.release().perform()
+    # actions.reset_actions().perform()
+
+    time.sleep(0.25)
 
 
   # image = Image.open(io.BytesIO(png_data))
